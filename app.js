@@ -16,7 +16,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/post", (req, res) => {
-  res.json({ massage: "Hello Json" });
+  res.json({ massage: "Hello Jsdon" });
 });
 
 app.post("/", async (req, res) => {
