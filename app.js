@@ -1,15 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const postModel = require("./models/post.model");
+require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
 
-const PORT = 8090;
+const LOCAL_PORT = process.env.PORT;
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
+app.get("/", async (req, res) => {
+  const allPosts = await postModel.find();
+
+  res.status(201).json(allPosts);
 });
 
 app.get("/post", (req, res) => {
@@ -28,8 +31,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-const DATABASE_URL =
-  "mongodb+srv://Jaloliddin:yK7tlxWVYXGYNxVQ@backend.lct9u.mongodb.net/?retryWrites=true&w=majority&appName=backend";
+const DATABASE_URL = process.env.DB_URL;
 
 const connected = async () => {
   try {
@@ -37,11 +39,11 @@ const connected = async () => {
       .connect(DATABASE_URL)
       .then(() => console.log("DataBase Connected"));
 
-    app.listen(PORT, () =>
-      console.log(`Listening to -- http://localhost:${PORT}`)
+    app.listen(LOCAL_PORT, () =>
+      console.log(`Listening to -- http://localhost:${LOCAL_PORT}`)
     );
   } catch (error) {
-    console.log("Error Connected DataBase");
+    console.log(`Error Connected DataBase -- ${error}`);
   }
 };
 
