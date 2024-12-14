@@ -1,4 +1,7 @@
 # dependencies
 /node_modules
-/.env
-/.gitignore
+.gitignore
+
+#envirement
+.env
+
